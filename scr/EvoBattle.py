@@ -95,6 +95,8 @@ def evolution(iastts:list, plystts:list,levelCap:int):
 
         
     #print("Pontuação: ",a ,"\nValidade: ",b)
+    
+    # Evitamos Batalhas perfeitas buscando não obter resultados com distribuiçoes muito desiguais 
     if a == 100:
         a = -1
 
