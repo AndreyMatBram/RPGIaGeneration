@@ -1,29 +1,22 @@
-
 # from pygame import time
-
 
 def evolution(iastts:list, plystts:list,levelCap:int):
 
 
-    if sum(iastts) > levelCap:
+    if sum(iastts) <= levelCap:
+        b = True
+    else:
+        b = False
         a = -1
-        # print("Pontuação: ",a,"\nValidade: ",b)
-        return a
-    
-    for i in range(5):
-        if iastts[i] < 1:
-            a = -1
-            return a
-        iastts[i] = int(iastts[i])
-        
-    
+        print("Pontuação: ",a,"\nValidade: ",b)
+        return a,b
 
     plyHealth, iaHealth = 100, 100
 
     # detectar qual atributo defensivo é menor para ent determinar o modo de ataque
 
     # 0 = fisico, 1 = magico, 2 = def fisico, 3 = def magico, 4 = agi
-    # fisico * (0.5 * (f/d)) = dano fisico
+ 
     
     #IA
     fisico = (iastts[0]) * (0.5 * (iastts[0]/plystts[2]))
@@ -63,20 +56,20 @@ def evolution(iastts:list, plystts:list,levelCap:int):
     round = 0
     winner = "none"
     while winner == "none":
-        # print("\n==========================================\nRound: ",round+1,"\n")
+        print("\n==========================================\nRound: ",round+1,"\n")
 
         if battleOrd[round] == 1:
-            # print("Player Ataca!\n -",mainAttkPly)
+            print("Player Ataca!\n -",mainAttkPly)
             iaHealth = iaHealth - mainAttkPly
-            # print("IA: ",iaHealth,"/100")
+            print("IA: ",iaHealth,"/100")
         elif battleOrd[round] == 0:
-            # print("Ia Ataca!\n -",mainAttkIa)
+            print("Ia Ataca!\n -",mainAttkIa)
             plyHealth = plyHealth - mainAttkIa
-            #print("Player: ",plyHealth,"/100")
+            print("Player: ",plyHealth,"/100")
 
         round += 1
         if round == 100:
-            break
+            round = 0
         
         if plyHealth <= 0:
             winner = "IA"
@@ -84,20 +77,22 @@ def evolution(iastts:list, plystts:list,levelCap:int):
             winner = "player"
         # time.delay(500)
      
-    #print ("\n",winner,"VENCEU!!!!!")
+    print ("\n",winner,"VENCEU!!!!!")
 
     if winner == "player":
         a = 0
     elif winner == "IA":
         a = iaHealth
-    elif round == 100:
-        a = -1
 
         
-    #print("Pontuação: ",a ,"\nValidade: ",b)
-    if a == 100:
-        a = -1
+    print("Pontuação: ",a ,"\nValidade: ",b)
+    return a,b
 
+def main():
+    s1= [27,36,21,20,21] # Fisico, Magico, Def Fisico, Def Magico, Agi  (IA)
+    s2= [12,32,25,21,14] # Fisico, Magico, Def Fisico, Def Magico, Agi  (Player)
+    max = sum(s2)
+    evolution(s1,s2,max)
 
-    return a
-
+if __name__ == "__main__":
+    main()
